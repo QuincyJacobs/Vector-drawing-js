@@ -1,11 +1,20 @@
-$(document).ready(function(){
-	var _cartesianRange = 10;
-	var _cartesianSize = 500;
-	var margin = 50;
+var _cartesianRange = 10;
+var _cartesianSize = 500;
 
-	var _lineColor = 'grey';
-	var _edgeColor = 'black';
-	var _drawLineColor = 'red';
+var _lineColor = 'grey';
+var _edgeColor = 'black';
+var _drawLineColor = 'red';
+var _backGroundColor = 'white';
+
+$(document).ready(function(){
+	
+	// update colors with the colors entered in html (may be cached from previous versions)
+	_lineColor = $("#lineColor").css('backgroundColor');
+	_edgeColor = $("#edgeColor").css('backgroundColor');
+	_backGroundColor = $("#bgColor").css('backgroundColor');
+	_drawLineColor = $("#drawColor").css('backgroundColor');
+
+	var margin = 50;
 
 	var vectorDivArray = [];
 	var arrowHeadArray = [];
@@ -38,7 +47,8 @@ $(document).ready(function(){
 			"position": "absolute",
 			"width": _cartesianSize + "px",
 			"height": _cartesianSize + "px",
-			"border": "1px solid black"
+			"border": "1px solid black",
+			"background-color": _backGroundColor
 		})
 
 		for(var i = 1; i < _cartesianRange * 2; i++)
@@ -47,8 +57,8 @@ $(document).ready(function(){
 			$("#cartesian").append("<div class='cartesian_line' style='width: 1px; height: "+_cartesianSize+"px; left: "+((_cartesianSize / (_cartesianRange * 2)) * i)+"px; position: absolute; background-color: "+_lineColor+"'></div>");
 		}
 
-		$("#cartesian").append("<div class='cartesian_line' style='width: "+_cartesianSize+"px; height: 1px; top: "+(_cartesianSize / 2)+"px; position: absolute; background-color: "+_edgeColor+"'></div>");
-		$("#cartesian").append("<div class='cartesian_line' style='width: 1px; height: "+_cartesianSize+"px;; left: "+(_cartesianSize / 2)+"px; position: absolute; background-color: "+_edgeColor+"'></div>");
+		$("#cartesian").append("<div class='cartesian_edge' style='width: "+_cartesianSize+"px; height: 1px; top: "+(_cartesianSize / 2)+"px; position: absolute; background-color: "+_edgeColor+"'></div>");
+		$("#cartesian").append("<div class='cartesian_edge' style='width: 1px; height: "+_cartesianSize+"px;; left: "+(_cartesianSize / 2)+"px; position: absolute; background-color: "+_edgeColor+"'></div>");
 	}
 
 	function startVectorDraw(mouseEvent)
@@ -68,11 +78,12 @@ $(document).ready(function(){
 	{
 		if(click)
 		{
+			console.log(_drawLineColor);
 			endX = x;
 			endY = y;
 
 			$("#vectors").children('#vector'+lines+'').remove();
-			$("#arrows").children('#arrowParent'+lines+'').remove();
+			$("#vectors").children('#arrowParent'+lines+'').remove();
 
 			var distance = Math.sqrt( ((startX-endX)*(startX-endX)) + ((startY-endY)*(startY-endY)) );
 			var xMid = (startX+endX)/2;
@@ -85,7 +96,7 @@ $(document).ready(function(){
 			arrowHeadArray.push("<div class='arrowParent' id='arrowParent"+lines+"' style='position: absolute; display: inline-block; top: "+endY+"px; left: "+endX+"px; padding: 5px;'><div class='arrowCW' id='arrowCW"+lines+"' style=' border: solid "+_drawLineColor+"; border-width: 0 0 3px 3px  ; display: inline-block; padding: 5px; transform: translate(-10px, -12px) rotate("+(slope+45)+"deg);'></div></div>");
 
 			$("#vectors").append(vectorDivArray[lines]);
-			$("#arrows").append(arrowHeadArray[lines]);
+			$("#vectors").append(arrowHeadArray[lines]);
 		}
 	}
 
@@ -108,7 +119,7 @@ $(document).ready(function(){
 		if(click)
 		{
 			$("#vectors").children('#vector'+lines+'').remove();
-			$("#arrows").children('#arrowParent'+lines+'').remove();
+			$("#vectors").children('#arrowParent'+lines+'').remove();
 			vectorDivArray.pop();
 			arrowHeadArray.pop();
 			click = false;
@@ -196,4 +207,41 @@ $(document).ready(function(){
 		checkHover(event);
 		endVectorDraw(event);
 	});
+
+
+	//************************************************************************************************************************************************************************************************************************************
+	// MENU STUFF
+	//************************************************************************************************************************************************************************************************************************************
+	
+	
 });
+
+function updateEdgeColor(jscolor)
+{
+	_edgeColor = '#' + jscolor;
+	elements = document.getElementsByClassName("cartesian_edge");
+	console.log(elements);
+	for (var i = 0; i < elements.length; i++) {
+    	elements[i].style.backgroundColor = _edgeColor;
+	}
+	$("#cartesian").css({"border-color": _edgeColor});
+}
+function updateLineColor(jscolor)
+{
+	_lineColor = '#' + jscolor;
+	elements = document.getElementsByClassName("cartesian_line");
+	console.log(elements);
+	for (var i = 0; i < elements.length; i++) {
+    	elements[i].style.backgroundColor = _lineColor;
+	}
+}
+function updateBackgroundColor(jscolor)
+{
+	console.log("r")
+	_backGroundColor = '#' + jscolor;
+	$("#cartesian").css({"background-color": _backGroundColor});
+}
+function updateDrawColor(jscolor)
+{
+	_drawLineColor = '#' + jscolor;
+}
