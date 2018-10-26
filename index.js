@@ -9,7 +9,6 @@ $(document).ready(function(){
 
 	var vectorDivArray = [];
 	var arrowHeadArray = [];
-	var arrowLineCounterClockwiseArray = [];
 
 	var lines = 0;
 
@@ -87,7 +86,6 @@ $(document).ready(function(){
 
 			$("#vectors").append(vectorDivArray[lines]);
 			$("#arrows").append(arrowHeadArray[lines]);
-			//$("#arrows").append(arrowLineCounterClockwiseArray[lines]);
 		}
 	}
 
@@ -107,11 +105,14 @@ $(document).ready(function(){
 
 	function breakCurrentLineDraw()
 	{
-		$("#vectors").children('#vector'+lines+'').remove();
-		$("#arrows").children('#arrowParent'+lines+'').remove();
-		vectorDivArray.pop();
-		arrowHeadArray.pop();
-		click = false;
+		if(click)
+		{
+			$("#vectors").children('#vector'+lines+'').remove();
+			$("#arrows").children('#arrowParent'+lines+'').remove();
+			vectorDivArray.pop();
+			arrowHeadArray.pop();
+			click = false;
+		}
 	}
 
 	function roundTo(input, round)
@@ -140,7 +141,6 @@ $(document).ready(function(){
 		else
 		{
 			inCartesian = false;
-
 		}
 	}
 
@@ -173,8 +173,16 @@ $(document).ready(function(){
 
 	$( document ).mousedown(function( event ) 
 	{
-		checkHover(event);
-		startVectorDraw(event);
+		if(event.which == 1){
+			if(!click){
+				checkHover(event);
+				startVectorDraw(event);
+			}
+		}
+		else
+		{
+			breakCurrentLineDraw();
+		}
 	});
 
 	$(document).mousemove(function( event )
