@@ -6,6 +6,9 @@ var _edgeColor = 'black';
 var _drawLineColor = 'red';
 var _backGroundColor = 'white';
 
+var vectorDivArray = [];
+var arrowHeadArray = [];
+
 //************************************************************************************************************************************************************************************************************************************
 // VECTOR STUFF
 //************************************************************************************************************************************************************************************************************************************
@@ -42,8 +45,8 @@ $(document).ready(function(){
 
 	var margin = 50;
 
-	var vectorDivArray = [];
-	var arrowHeadArray = [];
+	vectorDivArray = [];
+	arrowHeadArray = [];
 
 	var lines = 0;
 
@@ -104,12 +107,11 @@ $(document).ready(function(){
 	{
 		if(click)
 		{
-			console.log(_drawLineColor);
 			endX = x;
 			endY = y;
 
-			$("#vectors").children('#vector'+lines+'').remove();
-			$("#vectors").children('#arrowParent'+lines+'').remove();
+			$("#vectors").children('#vector'+lines).remove();
+			$("#vectors").children('#arrowParent'+lines).remove();
 
 			var distance = Math.sqrt( ((startX-endX)*(startX-endX)) + ((startY-endY)*(startY-endY)) );
 			var xMid = (startX+endX)/2;
@@ -128,21 +130,12 @@ $(document).ready(function(){
 
 	function endVectorDraw(mouseEvent)
 	{
+		// if left mouse click, mouse inside cartesian, and position isn't the same as start
 		if(click && inCartesian && (startX != roundTo(mouseEvent.pageX, (_cartesianSize / (_cartesianRange * 2))) | startY != roundTo(mouseEvent.pageY, (_cartesianSize / (_cartesianRange * 2)))))
 		{
 			drawLine(roundTo(mouseEvent.pageX, (_cartesianSize / (_cartesianRange * 2))), roundTo(mouseEvent.pageY, (_cartesianSize / (_cartesianRange * 2))));
-
-			// Calculate line coordinates
-			var startCoord = new Position(convertXToCoord(startX), convertYToCoord(startY));
-			var endCoord = new Position(convertXToCoord(endX), convertYToCoord(endY));
-			var line = new Line (startCoord.x, startCoord.y, endCoord.x, endCoord.y);
-
-			//show line position in pixels
-			$("#vectorInfoBox").append("<div class='vectorInfo"+lines+"'> vector "+lines+ " in pixels ==> " + startX + " : " + startY + " --- " + endX + " : " + endY + "</div>");
-
-			// show line position in coordinates
-			$("#vectorInfoBox").append("<div class='vectorInfo"+lines+"'> vector "+lines+ " in coords ==> " + line.x1 + " : " + line.y1 + " --- " + line.x2 + " : " + line.y2 + "</div>");
-
+			createInfoEntry();
+			
 			click = false;
 			lines++;
 
@@ -157,12 +150,39 @@ $(document).ready(function(){
 	{
 		if(click)
 		{
-			$("#vectors").children('#vector'+lines+'').remove();
-			$("#vectors").children('#arrowParent'+lines+'').remove();
+			$("#vectors").children('#vector'+lines).remove();
+			$("#vectors").children('#arrowParent'+lines).remove();
 			vectorDivArray.pop();
 			arrowHeadArray.pop();
 			click = false;
 		}
+	}
+
+	function createInfoEntry()
+	{
+		// Calculate line coordinates
+		var startCoord = new Position(convertXToCoord(startX), convertYToCoord(startY));
+		var endCoord = new Position(convertXToCoord(endX), convertYToCoord(endY));
+		var line = new Line (startCoord.x, startCoord.y, endCoord.x, endCoord.y);
+
+		// color picker
+		var currentColors = _drawLineColor.substr(4).slice(0, -1).split(",");
+		var input = document.createElement('INPUT')
+        var picker = new jscolor(input);
+        picker.fromRGB(currentColors[0], currentColors[1], currentColors[2]);
+        $(input).attr('id', 'input_'+lines);
+
+        // delete
+        var deleteButton = "<div class='removeVectorButton noselect' onClick='removeVector("+lines+")'>Delete</div>"
+
+		//show line position in pixels
+		$("#vectorInfoBox").append("<div class='vectorInfo vectorInfo"+lines+"'> vector "+lines+ " in coords ==> " + line.x1 + " : " + line.y1 + " --- " + line.x2 + " : " + line.y2 + "</div>");
+		$(".vectorInfo"+lines).append(input);
+		$(".vectorInfo"+lines+" INPUT").on('change', function(){
+
+        	updateExistingVector(this.value, $(this).attr('id').substr(6));
+        });
+		$(".vectorInfo"+lines).append(deleteButton);
 	}
 
 	function roundTo(input, round)
@@ -216,6 +236,18 @@ $(document).ready(function(){
 		return difference;
 	}
 
+	function getDifference(a, b)
+	{
+		if (a > b)
+		{
+			return (a - b);
+		}
+		else
+		{
+			return (b - a);
+		}
+	}
+
 	function convertXToCoord(x)
 	{
 		return (x - margin - (_cartesianSize/2)) / (_cartesianSize / (_cartesianRange * 2));
@@ -226,15 +258,24 @@ $(document).ready(function(){
 		return (y - margin - (_cartesianSize/2)) * -1 / (_cartesianSize / (_cartesianRange * 2));
 	}
 
+	function rgb2hex(red, green, blue) {
+        var rgb = blue | (green << 8) | (red << 16);
+        return (0x1000000 + rgb).toString(16).slice(1)
+  	}
+
 
 	//************************************************************************************************************************************************************************************************************************************
-	// UX STUFF
+	// MOUSE / BUTTON STUFF
 	//************************************************************************************************************************************************************************************************************************************
+
+
 
 	$( document ).mousedown(function( event ) 
 	{
-		if(event.which == 1){
-			if(!click){
+		if(event.which == 1)
+		{
+			if(!click)
+			{
 				checkHover(event);
 				startVectorDraw(event);
 			}
@@ -271,7 +312,6 @@ function updateEdgeColor(jscolor)
 {
 	_edgeColor = '#' + jscolor;
 	elements = document.getElementsByClassName("cartesian_edge");
-	console.log(elements);
 	for (var i = 0; i < elements.length; i++) {
     	elements[i].style.backgroundColor = _edgeColor;
 	}
@@ -281,18 +321,32 @@ function updateLineColor(jscolor)
 {
 	_lineColor = '#' + jscolor;
 	elements = document.getElementsByClassName("cartesian_line");
-	console.log(elements);
 	for (var i = 0; i < elements.length; i++) {
     	elements[i].style.backgroundColor = _lineColor;
 	}
 }
 function updateBackgroundColor(jscolor)
 {
-	console.log("r")
 	_backGroundColor = '#' + jscolor;
 	$("#cartesian").css({"background-color": _backGroundColor});
 }
 function updateDrawColor(jscolor)
 {
 	_drawLineColor = '#' + jscolor;
+}
+
+function removeVector(id)
+{
+	$("#vectors").children('#vector'+id).remove();
+	$("#vectors").children('#arrowParent'+id).remove();
+	$("#vectorInfoBox").children('.vectorInfo'+id).remove();
+	delete vectorDivArray[id];
+	delete arrowHeadArray[id];
+}
+
+function updateExistingVector(jscolor, id)
+{
+	var vector = "#vector" + id;
+	$("#vectors").children('#vector'+id).css('background-color', '#'+jscolor);
+	$("#vectors").children('#arrowParent'+id).children('#arrowCW'+id).css('border-color', '#'+jscolor);
 }

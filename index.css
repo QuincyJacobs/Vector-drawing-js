@@ -48,6 +48,11 @@ body {
 	background-color: red;
 	border: 5px solid #DD0000;
 	border-radius: 3px;
+	cursor: pointer;
+}
+
+.vectorInfo {
+	margin: 1px 0;
 }
 
 .noselect {
@@ -58,4 +63,15 @@ body {
         -ms-user-select: none; /* Internet Explorer/Edge */
             user-select: none; /* Non-prefixed version, currently
                                   supported by Chrome and Opera */
+}
+
+.removeVectorButton {
+	margin: auto 10px;
+	padding: 0 5px;
+	border: 2px solid #440000;
+	color: white;
+	font-weight: 900;
+	background-color: red;
+	display: inline-block;
+	cursor: pointer;
 }
