@@ -10,12 +10,14 @@
 		<link rel="stylesheet" id="index-css" href="./index.css" type="text/css" media="all">
 	</head>
 	<body>
-		<div class="cartesianPlaceholder" style="width: 600px; height: 600px;"></div>
-		<div class="menu">
-			<div class="picker">Edge color: <input id="edgeColor" class="jscolor{padding: 10, borderRadius: 0}" onchange="updateEdgeColor(this.jscolor)" value="000000"></div>
-			<div class="picker">Line color: <input id="lineColor" class="jscolor{padding: 10, borderRadius: 0}" onchange="updateLineColor(this.jscolor)" value="808080"></div>
-			<div class="picker">Background color: <input id="bgColor" class="jscolor{padding: 10, borderRadius: 0}" onchange="updateBackgroundColor(this.jscolor)" value="ffffff"></div>
-			<div class="picker">Drawing color: <input id="drawColor" class="jscolor{padding: 10, borderRadius: 0}" onchange="updateDrawColor(this.jscolor)" value="ff0000"></div>
+		<div id="cartesianPlaceholder"></div>
+		<div id="menu">
+			<div class="picker">Edge color: <input id="edgeColor" class="jscolor{padding: 10, borderRadius: 0, value:'000000'} colorBox" style="border:1px solid black; border-radius: 2px" onchange="updateEdgeColor(this.jscolor)" ></div>
+			<div class="picker">Line color: <input id="lineColor" class="jscolor{padding: 10, borderRadius: 0, value:'808080'} colorBox" style="border:1px solid black; border-radius: 2px" onchange="updateLineColor(this.jscolor)"></div>
+			<div class="picker">Background color: <input id="bgColor" class="jscolor{padding: 10, borderRadius: 0, value:'ffffff'} colorBox" style="border:1px solid black; border-radius: 2px" onchange="updateBackgroundColor(this.jscolor)"></div>
+			<div class="picker">Drawing color: <input id="drawColor" class="jscolor{padding: 10, borderRadius: 0, value:'ff0000'} colorBox" style="border:1px solid black; border-radius: 2px" onchange="updateDrawColor(this.jscolor)"></div>
+			<div id="reset" class="resetButton noselect">Reset</div>
 		</div>
+		<div id="vectorInfoBox"></div>
 	</body>
 </html>

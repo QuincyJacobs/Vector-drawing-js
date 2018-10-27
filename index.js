@@ -6,6 +6,32 @@ var _edgeColor = 'black';
 var _drawLineColor = 'red';
 var _backGroundColor = 'white';
 
+//************************************************************************************************************************************************************************************************************************************
+// VECTOR STUFF
+//************************************************************************************************************************************************************************************************************************************
+
+function Position(x, y) {
+	this.x = x;
+	this.y = y;
+}
+
+function Vector(x, y) {
+	this.x = x;
+	this.y = y;
+}
+
+function Line(x1, y1, x2, y2) {
+	this.x1 = x1;
+	this.y1 = y1;
+	this.x2 = x2;
+	this.y2 = y2;
+}
+
+
+//************************************************************************************************************************************************************************************************************************************
+// DRAW STUFF
+//************************************************************************************************************************************************************************************************************************************
+
 $(document).ready(function(){
 	
 	// update colors with the colors entered in html (may be cached from previous versions)
@@ -28,18 +54,18 @@ $(document).ready(function(){
 	var endX = 0;
 	var endY = 0;
 
-	$("body").append("<div id='cartesian'></div>");
-	$("body").append("<div id='vectors'></div>");
-	$("body").append("<div id='arrows'></div>");
+	$("#cartesianPlaceholder").append("<div id='cartesian'></div>");
+	$("#cartesianPlaceholder").append("<div id='vectors'></div>");
 
-	//************************************************************************************************************************************************************************************************************************************
-	// DRAW STUFF
-	//************************************************************************************************************************************************************************************************************************************
-	
 	drawCartesian();
 	
 	function drawCartesian()
 	{
+		lines = 0;
+		vectorDivArray = [];
+		arrowHeadArray = [];
+		$("#vectorInfoBox").empty();
+		$("#vectors").empty();
 		$("#cartesian").empty();
 		$("#cartesian").css({
 			"top": margin + "px",
@@ -105,8 +131,21 @@ $(document).ready(function(){
 		if(click && inCartesian && (startX != roundTo(mouseEvent.pageX, (_cartesianSize / (_cartesianRange * 2))) | startY != roundTo(mouseEvent.pageY, (_cartesianSize / (_cartesianRange * 2)))))
 		{
 			drawLine(roundTo(mouseEvent.pageX, (_cartesianSize / (_cartesianRange * 2))), roundTo(mouseEvent.pageY, (_cartesianSize / (_cartesianRange * 2))));
+
+			// Calculate line coordinates
+			var startCoord = new Position(convertXToCoord(startX), convertYToCoord(startY));
+			var endCoord = new Position(convertXToCoord(endX), convertYToCoord(endY));
+			var line = new Line (startCoord.x, startCoord.y, endCoord.x, endCoord.y);
+
+			//show line position in pixels
+			$("#vectorInfoBox").append("<div class='vectorInfo"+lines+"'> vector "+lines+ " in pixels ==> " + startX + " : " + startY + " --- " + endX + " : " + endY + "</div>");
+
+			// show line position in coordinates
+			$("#vectorInfoBox").append("<div class='vectorInfo"+lines+"'> vector "+lines+ " in coords ==> " + line.x1 + " : " + line.y1 + " --- " + line.x2 + " : " + line.y2 + "</div>");
+
 			click = false;
 			lines++;
+
 		}
 		else if(click)
 		{
@@ -177,6 +216,16 @@ $(document).ready(function(){
 		return difference;
 	}
 
+	function convertXToCoord(x)
+	{
+		return (x - margin - (_cartesianSize/2)) / (_cartesianSize / (_cartesianRange * 2));
+	}
+
+	function convertYToCoord(y)
+	{
+		return (y - margin - (_cartesianSize/2)) * -1 / (_cartesianSize / (_cartesianRange * 2));
+	}
+
 
 	//************************************************************************************************************************************************************************************************************************************
 	// UX STUFF
@@ -208,13 +257,15 @@ $(document).ready(function(){
 		endVectorDraw(event);
 	});
 
-
-	//************************************************************************************************************************************************************************************************************************************
-	// MENU STUFF
-	//************************************************************************************************************************************************************************************************************************************
-	
-	
+	$("#reset").on("click", function(){
+		drawCartesian();
+	});
 });
+
+
+//************************************************************************************************************************************************************************************************************************************
+// MENU STUFF
+//************************************************************************************************************************************************************************************************************************************
 
 function updateEdgeColor(jscolor)
 {
