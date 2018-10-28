@@ -162,7 +162,7 @@ $(document).ready(function(){
 	{
 		// decide background color
 		var entryBackgroundColor;
-		lines%2 ? entryBackgroundColor = "white" : entryBackgroundColor = "lightgrey";
+		$("#vectorInfoBox").children().length%2 ? entryBackgroundColor = "white" : entryBackgroundColor = "lightgrey";
 
 		// Calculate line coordinates
 		var startCoord = new Position(convertXToCoord(startX), convertYToCoord(startY));
@@ -347,6 +347,7 @@ function removeVector(id)
 	$("#vectorInfoBox").children('.vectorInfo'+id).remove();
 	delete vectorDivArray[id];
 	delete arrowHeadArray[id];
+	redoEntryBackgrounds();
 }
 
 function updateExistingVector(jscolor, id)
@@ -354,6 +355,14 @@ function updateExistingVector(jscolor, id)
 	var vector = "#vector" + id;
 	$("#vectors").children('#vector'+id).css('background-color', '#'+jscolor);
 	$("#vectors").children('#arrowParent'+id).children('#arrowCW'+id).css('border-color', '#'+jscolor);
+}
+
+function redoEntryBackgrounds()
+{
+	for(var i = 0; i < $("#vectorInfoBox").children().length; i++)
+	{
+		$("#vectorInfoBox").children()[i].style.backgroundColor = (i%2 ? "white" : "lightgrey");
+	}
 }
 
 
