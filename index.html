@@ -18,6 +18,14 @@
 			<div class="picker">Drawing color: <input id="drawColor" class="jscolor{padding: 10, borderRadius: 0, value:'ff0000'} colorBox" style="border:1px solid black; border-radius: 2px" onchange="updateDrawColor(this.jscolor)"></div>
 			<div id="reset" class="resetButton noselect">Reset Vectors</div>
 		</div>
-		<div id="vectorInfoBox"></div>
+		<div class="vectorInfoWrapper">
+			<div class="vectorInfoTop" style="background-color: white">
+				<div class="infoBoxTopTitles">Vector #</div><div
+				 class="infoBoxTopPositions">Tail</div><div class='infoBoxDivider'></div><div
+				 class="infoBoxTopPositions">Head</div><div class='infoBoxDivider'></div><div
+				 class="infoBoxTopColors">Color</div>
+			</div>
+			<div id="vectorInfoBox"></div>
+		</div>
 	</body>
 </html>

@@ -24,8 +24,25 @@ body {
 
 #vectorInfoBox {
 	width: 100%;
-	padding: 20px;
-	border: 1px solid red;
+	padding: 20px 0;
+	display: inline-block;
+}
+
+.vectorInfo {
+	height: 24px;
+}
+
+.vectorInfoWrapper {
+	width: 100%;
+	display: inline-block;
+	box-sizing: border-box;
+	border: 1px solid #555555;
+}
+
+.vectorInfoTop {
+	width: 100%;
+	font-weight: 900;
+	margin: 2px 0;
 	display: inline-block;
 }
 
@@ -51,14 +68,23 @@ body {
 	cursor: pointer;
 }
 
-.vectorInfo {
-	margin: 1px 0;
+.infoBoxTopTitles
+{
+	width: 125px;
+	display: inline-block;
+	text-align: center;
 }
 
-.positionVector
-{
-	padding: 0 10px 0 0;
+.infoBoxTopPositions {
+	width: 72px;
 	display: inline-block;
+	text-align: center;
+}
+
+.infoBoxTopColors {
+	width: 140px;
+	display: inline-block;
+	text-align: center;
 }
 
 .noselect {
@@ -71,8 +97,35 @@ body {
                                   supported by Chrome and Opera */
 }
 
+.infoVectorTitle {
+	margin: 0 10px 0 20px;
+	width: 100px;
+	display: inline-block;
+}
+
+.infoNumberBox {
+	width: 30px;
+	text-align: center;
+	background-color: white;
+	border: 1px solid grey;
+	display: inline-block;
+}
+
+.infoBoxDivider {
+	margin: 0 20px;
+	width: 1px;
+	height: 1px;
+	display: inline-block;
+}
+
+.smallDivider {
+	margin: 0 2px;
+	width: 1px;
+	height: 1px;
+	display: inline-block;
+}
+
 .removeVectorButton {
-	margin: auto 10px;
 	padding: 0 5px;
 	border: 2px solid #440000;
 	color: white;

@@ -180,13 +180,13 @@ $(document).ready(function(){
         var deleteButton = "<div class='removeVectorButton noselect' onClick='removeVector("+lines+")'>Delete</div>"
 
 		//show line position in pixels
-		$("#vectorInfoBox").append("<div class='vectorInfo vectorInfo"+lines+"' style='background-color: "+entryBackgroundColor+"'><div class='positionVector'> vector "+lines+ " in coords ==> " + line.x1 + " : " + line.y1 + " --- " + line.x2 + " : " + line.y2 + "</div></div>");
+		$("#vectorInfoBox").append("<div class='vectorInfo vectorInfo"+lines+"' style='background-color: "+entryBackgroundColor+"'><div class='infoVectorTitle'> vector "+lines+ "</div><div class='infoNumberBox'>" + line.x1 + "</div><div class='smallDivider'/><div class='infoNumberBox'>" + line.y1 + "</div><div class='infoBoxDivider'/><div class='infoNumberBox'>" + line.x2 + "</div><div class='smallDivider'/><div class='infoNumberBox'>" + line.y2 + "</div><div class='infoBoxDivider'/></div>");
 		$(".vectorInfo"+lines).append(input);
 		$(".vectorInfo"+lines+" INPUT").on('change', function(){
 
         	updateExistingVector(this.value, $(this).attr('id').substr(6));
         });
-		$(".vectorInfo"+lines).append(deleteButton);
+		$(".vectorInfo"+lines).append("<div class='infoBoxDivider'/>" + deleteButton);
 	}
 
 	function roundTo(input, round)
