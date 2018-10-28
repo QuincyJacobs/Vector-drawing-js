@@ -160,6 +160,10 @@ $(document).ready(function(){
 
 	function createInfoEntry()
 	{
+		// decide background color
+		var entryBackgroundColor;
+		lines%2 ? entryBackgroundColor = "white" : entryBackgroundColor = "lightgrey";
+
 		// Calculate line coordinates
 		var startCoord = new Position(convertXToCoord(startX), convertYToCoord(startY));
 		var endCoord = new Position(convertXToCoord(endX), convertYToCoord(endY));
@@ -176,7 +180,7 @@ $(document).ready(function(){
         var deleteButton = "<div class='removeVectorButton noselect' onClick='removeVector("+lines+")'>Delete</div>"
 
 		//show line position in pixels
-		$("#vectorInfoBox").append("<div class='vectorInfo vectorInfo"+lines+"'> vector "+lines+ " in coords ==> " + line.x1 + " : " + line.y1 + " --- " + line.x2 + " : " + line.y2 + "</div>");
+		$("#vectorInfoBox").append("<div class='vectorInfo vectorInfo"+lines+"' style='background-color: "+entryBackgroundColor+"'><div class='positionVector'> vector "+lines+ " in coords ==> " + line.x1 + " : " + line.y1 + " --- " + line.x2 + " : " + line.y2 + "</div></div>");
 		$(".vectorInfo"+lines).append(input);
 		$(".vectorInfo"+lines+" INPUT").on('change', function(){
 
@@ -258,17 +262,10 @@ $(document).ready(function(){
 		return (y - margin - (_cartesianSize/2)) * -1 / (_cartesianSize / (_cartesianRange * 2));
 	}
 
-	function rgb2hex(red, green, blue) {
-        var rgb = blue | (green << 8) | (red << 16);
-        return (0x1000000 + rgb).toString(16).slice(1)
-  	}
-
 
 	//************************************************************************************************************************************************************************************************************************************
 	// MOUSE / BUTTON STUFF
 	//************************************************************************************************************************************************************************************************************************************
-
-
 
 	$( document ).mousedown(function( event ) 
 	{
@@ -333,6 +330,14 @@ function updateBackgroundColor(jscolor)
 function updateDrawColor(jscolor)
 {
 	_drawLineColor = '#' + jscolor;
+
+	// always use colors in rgb so both the background drawing of arrows and the picker get the right color!
+	if(_drawLineColor.indexOf('#') == 0)
+	{
+		var rgb = hexToRgb(_drawLineColor);
+		_drawLineColor = "rgb("+rgb.r+","+rgb.g+","+rgb.b+")";
+	}
+
 }
 
 function removeVector(id)
@@ -349,4 +354,26 @@ function updateExistingVector(jscolor, id)
 	var vector = "#vector" + id;
 	$("#vectors").children('#vector'+id).css('background-color', '#'+jscolor);
 	$("#vectors").children('#arrowParent'+id).children('#arrowCW'+id).css('border-color', '#'+jscolor);
+}
+
+
+//************************************************************************************************************************************************************************************************************************************
+// UTILITY STUFF
+//************************************************************************************************************************************************************************************************************************************
+
+
+function rgbToHex(red, green, blue) 
+{
+    var rgb = blue | (green << 8) | (red << 16);
+    return (0x1000000 + rgb).toString(16).slice(1)
+}
+
+function hexToRgb(hex) 
+{
+    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return result ? {
+        r: parseInt(result[1], 16),
+        g: parseInt(result[2], 16),
+        b: parseInt(result[3], 16)
+    } : null;
 }

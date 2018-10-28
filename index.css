@@ -55,6 +55,12 @@ body {
 	margin: 1px 0;
 }
 
+.positionVector
+{
+	padding: 0 10px 0 0;
+	display: inline-block;
+}
+
 .noselect {
   -webkit-touch-callout: none; /* iOS Safari */
     -webkit-user-select: none; /* Safari */
