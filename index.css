@@ -106,7 +106,7 @@ body {
 .infoNumberBox {
 	width: 30px;
 	text-align: center;
-	background-color: white;
+	background-color: #D4D4D4;
 	border: 1px solid grey;
 	display: inline-block;
 }
