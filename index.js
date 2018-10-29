@@ -6,28 +6,22 @@ var _edgeColor = 'black';
 var _drawLineColor = 'red';
 var _backGroundColor = 'white';
 
-var vectorDivArray = [];
-var arrowHeadArray = [];
+var lineArray = [];
 
 //************************************************************************************************************************************************************************************************************************************
 // VECTOR STUFF
 //************************************************************************************************************************************************************************************************************************************
 
-function Position(x, y) {
-	this.x = x;
-	this.y = y;
-}
-
-function Vector(x, y) {
-	this.x = x;
-	this.y = y;
-}
-
-function Line(x1, y1, x2, y2) {
-	this.x1 = x1;
-	this.y1 = y1;
-	this.x2 = x2;
-	this.y2 = y2;
+function Arrow(id, x1, y1, x2, y2, vecX, vecY, color)
+{
+	this.id = id; 		// int id
+	this.x1 = x1; 		// tail x coordinate
+	this.y1 = y1; 		// tail y coordinate
+	this.x2 = x2; 		// head x coordinate
+	this.y2 = y2; 		// head y coordinate
+	this.vecX = vecX; 	// vector x movement
+	this.vecY = vecY; 	// vector y movement
+	this.color = color; // vector color
 }
 
 
@@ -45,8 +39,7 @@ $(document).ready(function(){
 
 	var margin = 50;
 
-	vectorDivArray = [];
-	arrowHeadArray = [];
+	lineArray = [];
 
 	var lines = 0;
 
@@ -65,11 +58,11 @@ $(document).ready(function(){
 	function drawCartesian()
 	{
 		lines = 0;
-		vectorDivArray = [];
-		arrowHeadArray = [];
+		lineArray = [];
 		$("#vectorInfoBox").empty();
 		$("#vectors").empty();
 		$("#cartesian").empty();
+
 		$("#cartesian").css({
 			"top": margin + "px",
 			"left": margin + "px",
@@ -98,8 +91,8 @@ $(document).ready(function(){
 
 			startX = roundTo(mouseEvent.pageX, (_cartesianSize / (_cartesianRange * 2)));
 			startY = roundTo(mouseEvent.pageY, (_cartesianSize / (_cartesianRange * 2)));
-			vectorDivArray.push("<div class='vector'  style='background-color: "+_drawLineColor+"; position: absolute; height: 2px;'></div>");
-			arrowHeadArray.push("<div class='arrow'  style='background-color: "+_drawLineColor+"; position: absolute; height: 2px;'></div>");
+
+			lineArray.push(new Arrow(lines, startX, startY, 0, 0, 0, 0, _drawLineColor));
 		}
 	}
 
@@ -112,19 +105,31 @@ $(document).ready(function(){
 
 			$("#vectors").children('#vector'+lines).remove();
 			$("#vectors").children('#arrowParent'+lines).remove();
+			lineArray.pop();
 
 			var distance = Math.sqrt( ((startX-endX)*(startX-endX)) + ((startY-endY)*(startY-endY)) );
 			var xMid = (startX+endX)/2;
 			var yMid = (startY+endY)/2;
 			var slope = (((Math.atan2(startY-endY, startX-endX)) * 180) / Math.PI);
 
-			vectorDivArray.pop();
-			vectorDivArray.push("<div class='vector' id='vector"+lines+"' style='background-color: "+_drawLineColor+"; position: absolute; height: 3px; width: "+distance+"px; top: "+(yMid)+"px; left: "+(xMid-(distance/2) + 1)+"px; transform: rotate("+slope+"deg);'></div>");
-			arrowHeadArray.pop();
-			arrowHeadArray.push("<div class='arrowParent' id='arrowParent"+lines+"' style='position: absolute; display: inline-block; top: "+endY+"px; left: "+endX+"px; padding: 5px;'><div class='arrowCW' id='arrowCW"+lines+"' style=' border: solid "+_drawLineColor+"; border-width: 0 0 3px 3px  ; display: inline-block; padding: 5px; transform: translate(-10px, -12px) rotate("+(slope+45)+"deg);'></div></div>");
+			$("#vectors").append("<div class='vector' id='vector"+lines+"' style='background-color: "+_drawLineColor+"; position: absolute; height: 3px; width: "+distance+"px; top: "+(yMid)+"px; left: "+(xMid-(distance/2) + 1)+"px; transform: rotate("+slope+"deg);'></div>");//vectorDivArray[lines]);
+			$("#vectors").append("<div class='arrowParent' id='arrowParent"+lines+"' style='position: absolute; display: inline-block; top: "+endY+"px; left: "+endX+"px; padding: 5px;'><div class='arrowCW' id='arrowCW"+lines+"' style=' border: solid "+_drawLineColor+"; border-width: 0 0 3px 3px  ; display: inline-block; padding: 5px; transform: translate(-10px, -12px) rotate("+(slope+45)+"deg);'></div></div>");//arrowHeadArray[lines]);
 
-			$("#vectors").append(vectorDivArray[lines]);
-			$("#vectors").append(arrowHeadArray[lines]);
+			var startCoordX = convertXToCoord(startX);
+			var startCoordY = convertYToCoord(startY);
+			var endCoordX = convertXToCoord(endX);
+			var endCoordY = convertYToCoord(endY);
+
+			lineArray.push(new Arrow(
+				lines,
+				startCoordX, 
+				startCoordY, 
+				endCoordX, 
+				endCoordY, 
+				(endCoordX - startCoordX),
+				(endCoordY - startCoordY),
+				_drawLineColor)
+			);
 		}
 	}
 
@@ -138,7 +143,6 @@ $(document).ready(function(){
 			
 			click = false;
 			lines++;
-
 		}
 		else if(click)
 		{
@@ -152,8 +156,7 @@ $(document).ready(function(){
 		{
 			$("#vectors").children('#vector'+lines).remove();
 			$("#vectors").children('#arrowParent'+lines).remove();
-			vectorDivArray.pop();
-			arrowHeadArray.pop();
+			lineArray.pop();
 			click = false;
 		}
 	}
@@ -163,11 +166,6 @@ $(document).ready(function(){
 		// decide background color
 		var entryBackgroundColor;
 		$("#vectorInfoBox").children().length%2 ? entryBackgroundColor = "white" : entryBackgroundColor = "lightgrey";
-
-		// Calculate line coordinates
-		var startCoord = new Position(convertXToCoord(startX), convertYToCoord(startY));
-		var endCoord = new Position(convertXToCoord(endX), convertYToCoord(endY));
-		var line = new Line (startCoord.x, startCoord.y, endCoord.x, endCoord.y);
 
 		// color picker
 		var currentColors = _drawLineColor.substr(4).slice(0, -1).split(",");
@@ -180,26 +178,29 @@ $(document).ready(function(){
         var deleteButton = "<div class='removeVectorButton noselect' onClick='removeVector("+lines+")'>Delete</div>"
 
 		//show line position in pixels
-		$("#vectorInfoBox").append("<div class='vectorInfo vectorInfo"+lines+"' style='background-color: "+entryBackgroundColor+"'><div class='infoVectorTitle'> vector "+lines+ "</div><div class='infoNumberBox'>" + line.x1 + "</div><div class='smallDivider'/><div class='infoNumberBox'>" + line.y1 + "</div><div class='infoBoxDivider'/><div class='infoNumberBox'>" + line.x2 + "</div><div class='smallDivider'/><div class='infoNumberBox'>" + line.y2 + "</div><div class='infoBoxDivider'/></div>");
+		$("#vectorInfoBox").append(
+			"<div class='vectorInfo vectorInfo"+lines+"' style='background-color: "+entryBackgroundColor+"'>" +
+				"<div class='infoVectorTitle'> vector "+lineArray[lines].id+ "</div>" +
+				"<div class='infoNumberBox'>" + lineArray[lines].x1 + "</div>" +
+				"<div class='smallDivider'/>" +
+				"<div class='infoNumberBox'>" + lineArray[lines].y1 + "</div>" +
+				"<div class='infoBoxDivider'/>" +
+				"<div class='infoNumberBox'>" + lineArray[lines].x2 + "</div>" +
+				"<div class='smallDivider'/>" +
+				"<div class='infoNumberBox'>" + lineArray[lines].y2 + "</div>" +
+				"<div class='infoBoxDivider'/>" +
+				"<div class='infoNumberBox'>" + lineArray[lines].vecX + "</div>" +
+				"<div class='smallDivider'/>" +
+				"<div class='infoNumberBox'>" + lineArray[lines].vecY + "</div>" +
+				"<div class='infoBoxDivider'/>" +
+			"</div>"
+		);
 		$(".vectorInfo"+lines).append(input);
 		$(".vectorInfo"+lines+" INPUT").on('change', function(){
 
         	updateExistingVector(this.value, $(this).attr('id').substr(6));
         });
 		$(".vectorInfo"+lines).append("<div class='infoBoxDivider'/>" + deleteButton);
-	}
-
-	function roundTo(input, round)
-	{
-		var leftover = input % round;
-		if(leftover > (round / 2))
-		{
-			return input + round - leftover;
-		}
-		else
-		{
-			return input - leftover;
-		}
 	}
 
 	function checkHover(mouseEvent)
@@ -218,40 +219,6 @@ $(document).ready(function(){
 		}
 	}
 
-	function getDistance(x1, y1, x2, y2)
-	{
-		var difference = 0;
-		if (x1 > x2)
-		{
-			difference += (x1 - x2);
-		}
-		else
-		{
-			difference += (x2 - x1);
-		}
-		if (y1 > y2)
-		{
-			difference += (y1 - y2);
-		}
-		else
-		{
-			difference += (y2 - y1);
-		}
-		return difference;
-	}
-
-	function getDifference(a, b)
-	{
-		if (a > b)
-		{
-			return (a - b);
-		}
-		else
-		{
-			return (b - a);
-		}
-	}
-
 	function convertXToCoord(x)
 	{
 		return (x - margin - (_cartesianSize/2)) / (_cartesianSize / (_cartesianRange * 2));
@@ -267,7 +234,7 @@ $(document).ready(function(){
 	// MOUSE / BUTTON STUFF
 	//************************************************************************************************************************************************************************************************************************************
 
-	$( document ).mousedown(function( event ) 
+	$(document).mousedown(function( event ) 
 	{
 		if(event.which == 1)
 		{
@@ -335,7 +302,7 @@ function updateDrawColor(jscolor)
 	if(_drawLineColor.indexOf('#') == 0)
 	{
 		var rgb = hexToRgb(_drawLineColor);
-		_drawLineColor = "rgb("+rgb.r+","+rgb.g+","+rgb.b+")";
+		_drawLineColor = "rgb("+rgb.r+", "+rgb.g+", "+rgb.b+")";
 	}
 
 }
@@ -345,16 +312,31 @@ function removeVector(id)
 	$("#vectors").children('#vector'+id).remove();
 	$("#vectors").children('#arrowParent'+id).remove();
 	$("#vectorInfoBox").children('.vectorInfo'+id).remove();
-	delete vectorDivArray[id];
-	delete arrowHeadArray[id];
+	for(var i = 0; i < lineArray.length; i++)
+	{
+		if(lineArray[i] && lineArray[i].id == id)
+		{
+			delete lineArray[i];
+		}
+	}
 	redoEntryBackgrounds();
 }
 
 function updateExistingVector(jscolor, id)
 {
-	var vector = "#vector" + id;
-	$("#vectors").children('#vector'+id).css('background-color', '#'+jscolor);
-	$("#vectors").children('#arrowParent'+id).children('#arrowCW'+id).css('border-color', '#'+jscolor);
+	var rgb = hexToRgb(jscolor);
+	jscolor = "rgb("+rgb.r+", "+rgb.g+", "+rgb.b+")";
+
+	$("#vectors").children('#vector'+id).css('background-color', jscolor);
+	$("#vectors").children('#arrowParent'+id).children('#arrowCW'+id).css('border-color', jscolor);
+
+	for(var i = 0; i < lineArray.length; i++)
+	{
+		if(lineArray[i] && lineArray[i].id == id)
+		{
+			lineArray[i].color = jscolor;
+		}
+	}
 }
 
 function redoEntryBackgrounds()
@@ -385,4 +367,51 @@ function hexToRgb(hex)
         g: parseInt(result[2], 16),
         b: parseInt(result[3], 16)
     } : null;
+}
+
+function getDistance(x1, y1, x2, y2)
+{
+	var difference = 0;
+	if (x1 > x2)
+	{
+		difference += (x1 - x2);
+	}
+	else
+	{
+		difference += (x2 - x1);
+	}
+	if (y1 > y2)
+	{
+		difference += (y1 - y2);
+	}
+	else
+	{
+		difference += (y2 - y1);
+	}
+	return difference;
+}
+
+function getDifference(a, b)
+{
+	if (a >= b)
+	{
+		return (a - b);
+	}
+	else
+	{
+		return (b - a);
+	}
+}
+
+function roundTo(input, round)
+{
+	var leftover = input % round;
+	if(leftover > (round / 2))
+	{
+		return input + round - leftover;
+	}
+	else
+	{
+		return input - leftover;
+	}
 }

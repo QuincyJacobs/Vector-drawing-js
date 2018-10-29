@@ -70,9 +70,9 @@ body {
 
 .infoBoxTopTitles
 {
-	width: 125px;
+	width: 105px;
 	display: inline-block;
-	text-align: center;
+	margin-left: 20px;
 }
 
 .infoBoxTopPositions {
