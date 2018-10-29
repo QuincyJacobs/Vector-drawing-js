@@ -143,7 +143,6 @@ $(document).ready(function(){
 			
 			click = false;
 			lines++;
-			console.log(LineArray)
 		}
 		else if(click)
 		{
