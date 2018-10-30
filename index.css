@@ -9,7 +9,7 @@ body {
 
 #cartesianPlaceholder {
 	width: 570px;
-	height: 570px;
+	height: 590px;
 	display: inline-block;
 	float: left;
 }
@@ -106,9 +106,17 @@ body {
 .infoNumberBox {
 	width: 30px;
 	text-align: center;
-	background-color: #D4D4D4;
+	background-color: #FFF;
 	border: 1px solid grey;
 	display: inline-block;
+	cursor: default;
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
 }
 
 .infoBoxDivider {

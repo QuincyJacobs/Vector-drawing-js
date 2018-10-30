@@ -59,6 +59,7 @@ $(document).ready(function(){
 	{
 		lines = 0;
 		vectorArray = [];
+		squareSize = _cartesianSize / (_cartesianRange * 2);
 		$("#vectorInfoBox").empty();
 		$("#vectors").empty();
 		$("#cartesian").empty();
@@ -73,14 +74,18 @@ $(document).ready(function(){
 			"background-color": _backGroundColor
 		})
 
-		for(var i = 1; i < _cartesianRange * 2; i++)
+		for(var i = 0; i <= _cartesianRange * 2; i++)
 		{
-			$("#cartesian").append("<div class='cartesian_line' style='width: "+_cartesianSize+"px; height: 1px; top: "+((_cartesianSize / (_cartesianRange * 2)) * i)+"px; position: absolute; background-color: "+_lineColor+"'></div>");
-			$("#cartesian").append("<div class='cartesian_line' style='width: 1px; height: "+_cartesianSize+"px; left: "+((_cartesianSize / (_cartesianRange * 2)) * i)+"px; position: absolute; background-color: "+_lineColor+"'></div>");
+			$("#cartesian").append("<div class='cartesian_line' style='width: "+_cartesianSize+"px; height: 1px; top: "+(squareSize * i)+"px; position: absolute; background-color: "+_lineColor+"' onmousedown='return false'></div>");
+			$("#cartesian").append("<div class='cartesian_line' style='width: 1px; height: "+_cartesianSize+"px; left: "+(squareSize * i)+"px; position: absolute; background-color: "+_lineColor+"' onmousedown='return false'></div>");
+			$("#cartesian").append("<div class='cartesian_number noselect' style='width: "+squareSize+"px; height: "+squareSize+"px; top: "+((squareSize * i)-(squareSize/2))+"px; left: -"+(squareSize+4)+"px; text-align: right; position: absolute; color: "+_edgeColor+"'; onmousedown='return false'>"+((i - _cartesianRange) * -1)+"</div>")
+			$("#cartesian").append("<div class='cartesian_number noselect' style='width: "+squareSize+"px; height: "+squareSize+"px; left: "+((squareSize * i)-(squareSize/2))+"px; bottom: -"+(squareSize+4)+"px; text-align: center; position: absolute; color: "+_edgeColor+"'; onmousedown='return false'>"+(i - _cartesianRange)+"</div>")
 		}
 
-		$("#cartesian").append("<div class='cartesian_edge' style='width: "+_cartesianSize+"px; height: 1px; top: "+(_cartesianSize / 2)+"px; position: absolute; background-color: "+_edgeColor+"'></div>");
-		$("#cartesian").append("<div class='cartesian_edge' style='width: 1px; height: "+_cartesianSize+"px;; left: "+(_cartesianSize / 2)+"px; position: absolute; background-color: "+_edgeColor+"'></div>");
+		$("#cartesian").append("<div class='cartesian_edge' style='width: "+_cartesianSize+"px; height: 1px; top: "+(_cartesianSize / 2)+"px; position: absolute; background-color: "+_edgeColor+"' onmousedown='return false'></div>");
+		$("#cartesian").append("<div class='cartesian_edge' style='width: 1px; height: "+_cartesianSize+"px;; left: "+(_cartesianSize / 2)+"px; position: absolute; background-color: "+_edgeColor+"' onmousedown='return false'></div>");
+		$("#cartesian").append("<div class='cartesian_edge' style='width: "+_cartesianSize+"px; height: 1px; top: "+(squareSize *  (_cartesianRange * 2))+"px; position: absolute; background-color: "+_edgeColor+"' onmousedown='return false'></div>");
+		$("#cartesian").append("<div class='cartesian_edge' style='width: 1px; height: "+_cartesianSize+"px; left: "+(squareSize * (_cartesianRange * 2))+"px; position: absolute; background-color: "+_edgeColor+"' onmousedown='return false'></div>");
 	}
 
 	function startVectorDraw(mouseEvent)
@@ -89,8 +94,8 @@ $(document).ready(function(){
 		{
 			click = true;
 
-			startX = roundTo(mouseEvent.pageX, (_cartesianSize / (_cartesianRange * 2)));
-			startY = roundTo(mouseEvent.pageY, (_cartesianSize / (_cartesianRange * 2)));
+			startX = roundTo(mouseEvent.pageX, squareSize);
+			startY = roundTo(mouseEvent.pageY, squareSize);
 
 			vectorArray.push(new Vector(lines, startX, startY, 0, 0, 0, 0, _drawLineColor));
 		}
@@ -112,8 +117,8 @@ $(document).ready(function(){
 			var yMid = (startY+endY)/2;
 			var slope = (((Math.atan2(startY-endY, startX-endX)) * 180) / Math.PI);
 
-			$("#vectors").append("<div class='vector' id='vector"+lines+"' style='background-color: "+_drawLineColor+"; position: absolute; height: 3px; width: "+distance+"px; top: "+(yMid)+"px; left: "+(xMid-(distance/2) + 1)+"px; transform: rotate("+slope+"deg);'></div>");//vectorDivArray[lines]);
-			$("#vectors").append("<div class='arrowParent' id='arrowParent"+lines+"' style='position: absolute; display: inline-block; top: "+endY+"px; left: "+endX+"px; padding: 5px;'><div class='arrowCW' id='arrowCW"+lines+"' style=' border: solid "+_drawLineColor+"; border-width: 0 0 3px 3px  ; display: inline-block; padding: 5px; transform: translate(-10px, -12px) rotate("+(slope+45)+"deg);'></div></div>");//arrowHeadArray[lines]);
+			$("#vectors").append("<div class='vector' id='vector"+lines+"' style='background-color: "+_drawLineColor+"; position: absolute; height: 3px; width: "+distance+"px; top: "+(yMid)+"px; left: "+(xMid-(distance/2) + 1)+"px; transform: rotate("+slope+"deg);' onmousedown='return false'></div>");//vectorDivArray[lines]);
+			$("#vectors").append("<div class='arrowParent' id='arrowParent"+lines+"' style='position: absolute; display: inline-block; top: "+endY+"px; left: "+endX+"px; padding: 5px;' onmousedown='return false'><div class='arrowCW' id='arrowCW"+lines+"' style=' border: solid "+_drawLineColor+"; border-width: 0 0 3px 3px  ; display: inline-block; padding: 5px; transform: translate(-10px, -12px) rotate("+(slope+45)+"deg);' onmousedown='return false'></div></div>");//arrowHeadArray[lines]);
 
 			var startCoordX = convertXToCoord(startX);
 			var startCoordY = convertYToCoord(startY);
@@ -136,9 +141,9 @@ $(document).ready(function(){
 	function endVectorDraw(mouseEvent)
 	{
 		// if left mouse click, mouse inside cartesian, and position isn't the same as start
-		if(click && inCartesian && (startX != roundTo(mouseEvent.pageX, (_cartesianSize / (_cartesianRange * 2))) | startY != roundTo(mouseEvent.pageY, (_cartesianSize / (_cartesianRange * 2)))))
+		if(click && inCartesian && (startX != roundTo(mouseEvent.pageX, squareSize) | startY != roundTo(mouseEvent.pageY, squareSize)))
 		{
-			drawLine(roundTo(mouseEvent.pageX, (_cartesianSize / (_cartesianRange * 2))), roundTo(mouseEvent.pageY, (_cartesianSize / (_cartesianRange * 2))));
+			drawLine(roundTo(mouseEvent.pageX, squareSize), roundTo(mouseEvent.pageY, squareSize));
 			createInfoEntry();
 			
 			click = false;
@@ -221,12 +226,12 @@ $(document).ready(function(){
 
 	function convertXToCoord(x)
 	{
-		return (x - margin - (_cartesianSize/2)) / (_cartesianSize / (_cartesianRange * 2));
+		return (x - margin - (_cartesianSize/2)) / squareSize;
 	}
 
 	function convertYToCoord(y)
 	{
-		return (y - margin - (_cartesianSize/2)) * -1 / (_cartesianSize / (_cartesianRange * 2));
+		return (y - margin - (_cartesianSize/2)) * -1 / squareSize;
 	}
 
 
@@ -278,6 +283,10 @@ function updateEdgeColor(jscolor)
 	elements = document.getElementsByClassName("cartesian_edge");
 	for (var i = 0; i < elements.length; i++) {
     	elements[i].style.backgroundColor = _edgeColor;
+	}
+	elements = document.getElementsByClassName("cartesian_number");
+	for (var i = 0; i < elements.length; i++) {
+    	elements[i].style.color = _edgeColor;
 	}
 	$("#cartesian").css({"border-color": _edgeColor});
 }
