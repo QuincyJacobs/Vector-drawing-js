@@ -59,6 +59,10 @@ $(document).ready(function(){
 	{
 		lines = 0;
 		vectorArray = [];
+		while(_cartesianSize % (_cartesianRange * 2) != 0)
+		{
+			_cartesianSize--;
+		}
 		squareSize = _cartesianSize / (_cartesianRange * 2);
 		$("#vectorInfoBox").empty();
 		$("#vectors").empty();
@@ -78,7 +82,7 @@ $(document).ready(function(){
 		{
 			$("#cartesian").append("<div class='cartesian_line' style='width: "+_cartesianSize+"px; height: 1px; top: "+(squareSize * i)+"px; position: absolute; background-color: "+_lineColor+"' onmousedown='return false'></div>");
 			$("#cartesian").append("<div class='cartesian_line' style='width: 1px; height: "+_cartesianSize+"px; left: "+(squareSize * i)+"px; position: absolute; background-color: "+_lineColor+"' onmousedown='return false'></div>");
-			$("#cartesian").append("<div class='cartesian_number noselect' style='width: "+squareSize+"px; height: "+squareSize+"px; top: "+((squareSize * i)-(squareSize/2))+"px; left: -"+(squareSize+4)+"px; text-align: right; position: absolute; color: "+_edgeColor+"'; onmousedown='return false'>"+((i - _cartesianRange) * -1)+"</div>")
+			$("#cartesian").append("<div class='cartesian_number noselect' style='width: "+squareSize+"px; height: "+squareSize+"px; top: "+((squareSize * i)-(squareSize/2))+"px; left: -"+(squareSize+4)+"px; text-align: right; position: absolute; color: "+_edgeColor+"; line-height: "+squareSize+"px';' onmousedown='return false'>"+((i - _cartesianRange) * -1)+"</div>")
 			$("#cartesian").append("<div class='cartesian_number noselect' style='width: "+squareSize+"px; height: "+squareSize+"px; left: "+((squareSize * i)-(squareSize/2))+"px; bottom: -"+(squareSize+4)+"px; text-align: center; position: absolute; color: "+_edgeColor+"'; onmousedown='return false'>"+(i - _cartesianRange)+"</div>")
 		}
 
@@ -117,8 +121,8 @@ $(document).ready(function(){
 			var yMid = (startY+endY)/2;
 			var slope = (((Math.atan2(startY-endY, startX-endX)) * 180) / Math.PI);
 
-			$("#vectors").append("<div class='vector' id='vector"+lines+"' style='background-color: "+_drawLineColor+"; position: absolute; height: 3px; width: "+distance+"px; top: "+(yMid)+"px; left: "+(xMid-(distance/2) + 1)+"px; transform: rotate("+slope+"deg);' onmousedown='return false'></div>");//vectorDivArray[lines]);
-			$("#vectors").append("<div class='arrowParent' id='arrowParent"+lines+"' style='position: absolute; display: inline-block; top: "+endY+"px; left: "+endX+"px; padding: 5px;' onmousedown='return false'><div class='arrowCW' id='arrowCW"+lines+"' style=' border: solid "+_drawLineColor+"; border-width: 0 0 3px 3px  ; display: inline-block; padding: 5px; transform: translate(-10px, -12px) rotate("+(slope+45)+"deg);' onmousedown='return false'></div></div>");//arrowHeadArray[lines]);
+			$("#vectors").append("<div class='vector' id='vector"+lines+"' style='background-color: "+_drawLineColor+"; position: absolute; height: 3px; width: "+distance+"px; top: "+(yMid)+"px; left: "+(xMid-(distance/2) + 1)+"px; transform: rotate("+slope+"deg);' onmousedown='return false'></div>");
+			$("#vectors").append("<div class='arrowParent' id='arrowParent"+lines+"' style='position: absolute; display: inline-block; top: "+endY+"px; left: "+endX+"px; padding: 5px;' onmousedown='return false'><div class='arrowCW' id='arrowCW"+lines+"' style=' border: solid "+_drawLineColor+"; border-width: 0 0 3px 3px  ; display: inline-block; padding: 5px; transform: translate(-10px, -12px) rotate("+(slope+45)+"deg);' onmousedown='return false'></div></div>");
 
 			var startCoordX = convertXToCoord(startX);
 			var startCoordY = convertYToCoord(startY);
