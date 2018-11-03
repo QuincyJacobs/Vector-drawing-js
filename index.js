@@ -92,6 +92,23 @@ $(document).ready(function(){
 		$("#cartesian").append("<div class='cartesian_edge' style='width: 1px; height: "+_cartesianSize+"px; left: "+(squareSize * (_cartesianRange * 2))+"px; position: absolute; background-color: "+_edgeColor+"' onmousedown='return false'></div>");
 	}
 
+	function drawVector(vector)
+	{
+		var startPositionX = convertXToPosition(vector.x1);
+		var startPositionY = convertXToPosition(vector.y1);
+		var endPositionX = convertXToPosition(vector.x2);
+		var endPositionY = convertXToPosition(vector.y2);
+
+		var distance = Math.sqrt( ((startPositionX-endPositionX)*(startPositionX-endPositionX)) + ((startPositionY-endPositionY)*(startPositionY-endPositionY)) );
+		var xMid = (startPositionX+endPositionX)/2;
+		var yMid = (startPositionY+endPositionY)/2;
+		var slope = (((Math.atan2(startPositionY-endPositionY, startPositionX-endPositionX)) * 180) / Math.PI);
+
+		$("#vectors").append("<div class='vector' id='vector"+vector.id+"' style='background-color: "+vector.color+"; position: absolute; height: 3px; width: "+distance+"px; top: "+(yMid)+"px; left: "+(xMid-(distance/2) + 1)+"px; transform: rotate("+slope+"deg);' onmousedown='return false'></div>");
+		$("#vectors").append("<div class='arrowParent' id='arrowParent"+vector.id+"' style='position: absolute; display: inline-block; top: "+endPositionY+"px; left: "+endPositionX+"px; padding: 5px;' onmousedown='return false'><div class='arrowCW' id='arrowCW"+vector.id+"' style=' border: solid "+vector.color+"; border-width: 0 0 3px 3px  ; display: inline-block; padding: 5px; transform: translate(-10px, -12px) rotate("+(slope+45)+"deg);' onmousedown='return false'></div></div>");
+
+	}
+
 	function startVectorDraw(mouseEvent)
 	{
 		if(inCartesian)
@@ -236,6 +253,16 @@ $(document).ready(function(){
 	function convertYToCoord(y)
 	{
 		return (y - margin - (_cartesianSize/2)) * -1 / squareSize;
+	}
+
+	function convertXToPosition(x)
+	{
+		return (margin + (_cartesianSize/2)) + (x * squareSize);
+	}
+
+	function convertYToPosition(y)
+	{
+		return (margin + (_cartesianSize/2)) * -1 + (x * squareSize);
 	}
 
 
