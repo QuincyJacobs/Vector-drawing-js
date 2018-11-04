@@ -9,7 +9,7 @@ var _backGroundColor = 'white';
 
 var vectorArray = [];
 
-var margin = 50;
+var margin = 70;
 var lines = 0;
 
 var click = false;
@@ -245,3 +245,18 @@ $(document).ready(function(){
 		}
 	});
 });
+
+function setCartesianInteractionEnabled(boolean)
+{
+	cartesianInteractionEnabled = boolean;
+}
+
+function setCartesianRange(integer)
+{
+	_cartesianRange = integer;
+}
+
+function setCartesianSize(integer)
+{
+	_cartesianRange = integer;
+}
