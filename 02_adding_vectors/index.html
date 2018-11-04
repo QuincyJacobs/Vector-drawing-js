@@ -27,6 +27,35 @@
 			<div class="picker">Combined arrow color: <input id="drawColor" class="jscolor{padding: 10, borderRadius: 0, value:'aa00ff'} colorBox" style="border:1px solid black; border-radius: 2px" onchange="updateDrawColor(this.jscolor)"></div>
 			<div id="reset" class="resetButton noselect">Reset Vectors</div>
 		</div>
+		<!--TODO: input min and max should look at cartesian range -->
+		<div id="calculationBox">
+			<div class="vectorWrapper">
+				<div class="leftSquareBracket2d"></div>
+				<div class="numberWrapper2d">
+					<div class="numberBox"><input type="number" max="10" Min="-10" /></div>
+					<div class="numberBox"><input type="number" max="10" Min="-10" /></div>
+				</div>
+				<div class="rightSquareBracket2d"></div>
+			</div>
+			<div class="operatorWrapper">+</div>
+			<div class="vectorWrapper">
+				<div class="leftSquareBracket2d"></div>
+				<div class="numberWrapper2d">
+					<div class="numberBox"><input type="number" max="10" Min="-10" /></div>
+					<div class="numberBox"><input type="number" max="10" Min="-10" /></div>
+				</div>
+				<div class="rightSquareBracket2d"></div>
+			</div>
+			<div class="operatorWrapper">=</div>
+			<div class="vectorWrapper">
+				<div class="leftSquareBracket2d"></div>
+				<div class="numberWrapper2d">
+					<div class="numberBox"><input type="number" max="10" Min="-10" /></div>
+					<div class="numberBox"><input type="number" max="10" Min="-10" /></div>
+				</div>
+				<div class="rightSquareBracket2d"></div>
+			</div>
+		</div>
 		<div class="vectorInfoWrapper">
 			<div class="vectorInfoTop" style="background-color: white">
 				<div class="infoBoxTopTitles">Vector #</div><!--

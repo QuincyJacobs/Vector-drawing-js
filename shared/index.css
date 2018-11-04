@@ -7,25 +7,7 @@ body {
 	min-width: 940px;
 }
 
-#cartesianPlaceholder {
-	width: 590px;
-	height: 630px;
-	display: inline-block;
-	float: left;
-}
-
-#menu {
-	padding: 50px 20px;
-	border-radius: 5px;
-	display: inline-block;
-	background-color: lightgrey;
-}
-
-#vectorInfoBox {
-	width: 100%;
-	padding: 20px 0;
-	display: inline-block;
-}
+/* LINKS */
 
 .linkBlock {
 	text-align: center;
@@ -43,6 +25,120 @@ body {
     border-radius: 6px;
     background-color: #d1fdff;
     display: inline-block;
+}
+
+
+/* COLOR PICKER*/
+
+.picker {
+	width: 300px;
+	height: 40px;
+}
+
+.colorBox {
+	float: right;
+}
+
+
+/* MENU */
+
+#menu {
+	padding: 50px 20px;
+	border-radius: 5px;
+	display: inline-block;
+	background-color: lightgrey;
+}
+
+.resetButton {
+	margin: auto;
+	width: 150px;
+	padding: 10px;
+	text-align: center;
+	font-weight: 900;
+	color: white;
+	background-color: red;
+	border: 5px solid #DD0000;
+	border-radius: 3px;
+	cursor: pointer;
+}
+
+
+/* CARTESIAN*/
+
+#cartesianPlaceholder {
+	width: 590px;
+	height: 580px;
+	display: inline-block;
+	float: left;
+}
+
+
+/* CALCULATION BOX*/
+
+#calculationBox {
+	margin: 0 0 10px;
+	padding: 10px 40px;
+	width: calc(100% - 80px);
+	height: 72px;
+	background-color: lightblue;
+	display: inline-block;
+}
+
+.vectorWrapper {
+	float: left;
+}
+
+.leftSquareBracket2d {
+	width: 5px;
+	height: 70px;
+	border: solid black;
+	border-width: 1px 0 1px 1px;
+	display: inline-block;
+}
+
+.rightSquareBracket2d {
+	width: 5px;
+	height: 70px;
+	border: solid black;
+	border-width: 1px 1px 1px 0;
+	display: inline-block;
+}
+
+.numberWrapper2d {
+	width: 50px;
+	height: 72px;
+	display: inline-block;
+}
+
+.numberBox {
+	margin: 4px 1px;
+	width: 46px;
+	height: 30px;
+}
+.numberBox input {
+	width: 44px;
+	height: 24px;
+	font-size: 18px;
+	display: inherit;
+	text-align: left;
+}
+
+.operatorWrapper {
+	margin: 10px 35px 0 20px;
+	width: 10px;
+	height: 50px;
+	font-size: 45px;
+	font-weight: 900;
+	float: left;
+}
+
+
+/* VECTOR INFO BOX*/
+
+#vectorInfoBox {
+	width: 100%;
+	padding: 20px 0;
+	display: inline-block;
 }
 
 .vectorInfo {
@@ -63,28 +159,6 @@ body {
 	display: inline-block;
 }
 
-.picker {
-	width: 300px;
-	height: 40px;
-}
-
-.colorBox {
-	float: right;
-}
-
-.resetButton {
-	margin: auto;
-	width: 150px;
-	padding: 10px;
-	text-align: center;
-	font-weight: 900;
-	color: white;
-	background-color: red;
-	border: 5px solid #DD0000;
-	border-radius: 3px;
-	cursor: pointer;
-}
-
 .infoBoxTopTitles
 {
 	width: 105px;
@@ -102,16 +176,6 @@ body {
 	width: 140px;
 	display: inline-block;
 	text-align: center;
-}
-
-.noselect {
-  -webkit-touch-callout: none; /* iOS Safari */
-    -webkit-user-select: none; /* Safari */
-     -khtml-user-select: none; /* Konqueror HTML */
-       -moz-user-select: none; /* Firefox */
-        -ms-user-select: none; /* Internet Explorer/Edge */
-            user-select: none; /* Non-prefixed version, currently
-                                  supported by Chrome and Opera */
 }
 
 .infoVectorTitle {
@@ -158,4 +222,17 @@ body {
 	background-color: red;
 	display: inline-block;
 	cursor: pointer;
+}
+
+
+/* OTHER */
+
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
 }
