@@ -31,7 +31,7 @@ body {
 /* COLOR PICKER*/
 
 .picker {
-	width: 300px;
+	width: 325px;
 	height: 40px;
 }
 
@@ -111,16 +111,18 @@ body {
 }
 
 .numberBox {
-	margin: 4px 1px;
+	margin: 3px 1px;
 	width: 46px;
 	height: 30px;
+	background-color: white;
+    border: 1px solid #a9a9a9;
+    display: block;
 }
 .numberBox input {
 	width: 44px;
 	height: 24px;
 	font-size: 18px;
-	display: inherit;
-	text-align: left;
+	float: left;
 }
 
 .operatorWrapper {
@@ -130,6 +132,25 @@ body {
 	font-size: 45px;
 	font-weight: 900;
 	float: left;
+}
+
+.drawButton {
+    margin: 12px 30px 12px 40px;
+	width: 150px;
+	padding: 10px;
+	text-align: center;
+	font-weight: 900;
+	color: black;
+	background-color: #00ff00;
+    border: 5px solid #0a8800;
+	border-radius: 3px;
+	cursor: pointer;
+	display: inline-block;
+}
+
+.errorBox {
+	display: inline-block;
+	color: red;
 }
 
 

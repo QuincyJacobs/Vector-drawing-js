@@ -21,8 +21,6 @@ var startY = 0;
 var endX = 0;
 var endY = 0;
 
-function drawCartesian(){}
-
 $(document).ready(function(){
 	// update colors with the colors entered in html (may be cached from previous versions)
 	_lineColor = $("#lineColor").css('backgroundColor');
@@ -182,6 +180,11 @@ $(document).ready(function(){
 		}
 	}
 
+	function drawAddition(vector1, vector2)
+	{
+		console.log("TODO");
+	}
+
 	function convertXToCoord(x)
 	{
 		return (x - margin - (_cartesianSize/2)) / squareSize;
@@ -243,6 +246,10 @@ $(document).ready(function(){
 			checkHover(event);
 			endVectorDraw(event);
 		}
+	});
+
+	$( "#drawButton" ).click(function() {
+		drawAddition(new Vector(), new Vector());
 	});
 });
 

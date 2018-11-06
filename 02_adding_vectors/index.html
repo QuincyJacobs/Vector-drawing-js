@@ -28,12 +28,12 @@
 			<div id="reset" class="resetButton noselect">Reset Vectors</div>
 		</div>
 		<!--TODO: input min and max should look at cartesian range -->
-		<div id="calculationBox">
+		<div id="calculationBox" class="noselect">
 			<div class="vectorWrapper">
 				<div class="leftSquareBracket2d"></div>
 				<div class="numberWrapper2d">
-					<div class="numberBox"><input type="number" max="10" Min="-10" /></div>
-					<div class="numberBox"><input type="number" max="10" Min="-10" /></div>
+					<div class="numberBox"><input id="1x" type="number" max="10" Min="-10" /></div>
+					<div class="numberBox"><input id="1y" type="number" max="10" Min="-10" /></div>
 				</div>
 				<div class="rightSquareBracket2d"></div>
 			</div>
@@ -41,8 +41,8 @@
 			<div class="vectorWrapper">
 				<div class="leftSquareBracket2d"></div>
 				<div class="numberWrapper2d">
-					<div class="numberBox"><input type="number" max="10" Min="-10" /></div>
-					<div class="numberBox"><input type="number" max="10" Min="-10" /></div>
+					<div class="numberBox"><input id="2x" type="number" max="10" Min="-10" /></div>
+					<div class="numberBox"><input id="2y" type="number" max="10" Min="-10" /></div>
 				</div>
 				<div class="rightSquareBracket2d"></div>
 			</div>
@@ -50,11 +50,13 @@
 			<div class="vectorWrapper">
 				<div class="leftSquareBracket2d"></div>
 				<div class="numberWrapper2d">
-					<div class="numberBox"><input type="number" max="10" Min="-10" /></div>
-					<div class="numberBox"><input type="number" max="10" Min="-10" /></div>
+					<div id="resultX" class="numberBox"></div>
+					<div id="resultY" class="numberBox"></div>
 				</div>
 				<div class="rightSquareBracket2d"></div>
 			</div>
+			<div id="drawButton" class="drawButton">Draw</div>
+			<div class="errorBox">Error</div>
 		</div>
 		<div class="vectorInfoWrapper">
 			<div class="vectorInfoTop" style="background-color: white">
