@@ -39,3 +39,8 @@ function createInfoEntry()
     });
 	$(".vectorInfo"+lines).append("<div class='infoBoxDivider'/>" + deleteButton);
 }
+
+function removeInfoEntry(id)
+{
+	$(".vectorInfo"+id).remove();
+}

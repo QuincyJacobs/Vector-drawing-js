@@ -22,9 +22,9 @@
 			<div class="picker">Edge color: <input id="edgeColor" class="jscolor{padding: 10, borderRadius: 0, value:'000000'} colorBox" style="border:1px solid black; border-radius: 2px" onchange="updateEdgeColor(this.jscolor)" ></div>
 			<div class="picker">Line color: <input id="lineColor" class="jscolor{padding: 10, borderRadius: 0, value:'808080'} colorBox" style="border:1px solid black; border-radius: 2px" onchange="updateLineColor(this.jscolor)"></div>
 			<div class="picker">Background color: <input id="bgColor" class="jscolor{padding: 10, borderRadius: 0, value:'ffffff'} colorBox" style="border:1px solid black; border-radius: 2px" onchange="updateBackgroundColor(this.jscolor)"></div>
-			<div class="picker">First arrow color: <input id="drawColor" class="jscolor{padding: 10, borderRadius: 0, value:'ff0000'} colorBox" style="border:1px solid black; border-radius: 2px" onchange="updateDrawColor(this.jscolor)"></div>
-			<div class="picker">Second arrow color: <input id="drawColor" class="jscolor{padding: 10, borderRadius: 0, value:'0000ff'} colorBox" style="border:1px solid black; border-radius: 2px" onchange="updateDrawColor(this.jscolor)"></div>
-			<div class="picker">Combined arrow color: <input id="drawColor" class="jscolor{padding: 10, borderRadius: 0, value:'aa00ff'} colorBox" style="border:1px solid black; border-radius: 2px" onchange="updateDrawColor(this.jscolor)"></div>
+			<div class="picker">First arrow color: <input id="drawColor1" class="jscolor{padding: 10, borderRadius: 0, value:'ff0000'} colorBox" style="border:1px solid black; border-radius: 2px" onchange="updateDrawColor(this.jscolor)"></div>
+			<div class="picker">Second arrow color: <input id="drawColor2" class="jscolor{padding: 10, borderRadius: 0, value:'0000ff'} colorBox" style="border:1px solid black; border-radius: 2px" onchange="updateDrawColor(this.jscolor)"></div>
+			<div class="picker">Combined arrow color: <input id="drawColor3" class="jscolor{padding: 10, borderRadius: 0, value:'aa00ff'} colorBox" style="border:1px solid black; border-radius: 2px" onchange="updateDrawColor(this.jscolor)"></div>
 			<div id="reset" class="resetButton noselect">Reset Vectors</div>
 		</div>
 		<!--TODO: input min and max should look at cartesian range -->
@@ -56,7 +56,7 @@
 				<div class="rightSquareBracket2d"></div>
 			</div>
 			<div id="drawButton" class="drawButton">Draw</div>
-			<div class="errorBox">Error</div>
+			<div id="error" class="errorBox">Error</div>
 		</div>
 		<div class="vectorInfoWrapper">
 			<div class="vectorInfoTop" style="background-color: white">
