@@ -10,6 +10,20 @@ function Vector(id, x1, y1, x2, y2, vecX, vecY, color)
 	this.color = color; // vector color
 }
 
+function NegateVector(vector, id, color)
+{
+	return new Vector(
+		id,
+		vector.x1 * -1,
+		vector.y1 * -1,
+		vector.x2 * -1,
+		vector.y2 * -1,
+		vector.vecX * -1,
+		vector.vecY * -1,
+		color
+	);
+}
+
 function AddVectors(vector1, vector2, id, color)
 {
 	return new Vector(
