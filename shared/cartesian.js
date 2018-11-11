@@ -400,7 +400,7 @@ $(document).ready(function(){
 		$("#error").css("display", "none");
 		$("#resultX").empty();
 		$("#resultY").empty();
-		$("#lengthButton").html("=");
+		$("#operator").html("=");
 
 		for(;vectorArray.length > 0;)
 		{
