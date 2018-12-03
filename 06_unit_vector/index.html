@@ -1,0 +1,54 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<meta charset="UTF-8">
+		<title>6. Unit vector</title>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script src="./../shared/utility.js"></script>
+		<script src="./../shared/vector.js"></script>
+		<script src="./../shared/cartesian.js"></script>
+		<script src="./../shared/menu.js"></script>
+		<script src="./../shared/vectorInfo.js"></script>
+		<script src="./../libs/jscolor.js"></script>
+		<script src="./index.js"></script>
+		<link rel="shortcut icon" type="image/x-icon" href="./../favicon.ico">
+		<link rel="stylesheet" id="index-css" href="./../shared/index.css" type="text/css" media="all">
+	</head>
+	<body>
+		<div class="linkBlock"><a href="./../00_menu/index.html">Menu</a></div>
+		<div id="cartesianPlaceholder"></div>
+		<div id="menu">
+			<div class="picker">Edge color: <input id="edgeColor" class="jscolor{padding: 10, borderRadius: 0, value:'000000'} colorBox" style="border:1px solid black; border-radius: 2px" onchange="updateEdgeColor(this.jscolor)" ></div>
+			<div class="picker">Line color: <input id="lineColor" class="jscolor{padding: 10, borderRadius: 0, value:'808080'} colorBox" style="border:1px solid black; border-radius: 2px" onchange="updateLineColor(this.jscolor)"></div>
+			<div class="picker">Background color: <input id="bgColor" class="jscolor{padding: 10, borderRadius: 0, value:'ffffff'} colorBox" style="border:1px solid black; border-radius: 2px" onchange="updateBackgroundColor(this.jscolor)"></div>
+			<div class="picker">Arrow color: <input id="drawColor1" class="jscolor{padding: 10, borderRadius: 0, value:'ff0000'} colorBox" style="border:1px solid black; border-radius: 2px" onchange="updateDrawColor(this.jscolor)"></div>
+			<div class="picker">Unit color: <input id="drawColor2" class="jscolor{padding: 10, borderRadius: 0, value:'0000ff'} colorBox" style="border:1px solid black; border-radius: 2px" onchange="updateDrawColor(this.jscolor)"></div>
+			<div id="reset" class="resetButton noselect">Reset Vectors</div>
+		</div>
+		<!--TODO: input min and max should look at cartesian range -->
+		<div id="calculationBox" class="noselect">
+			<div class="vectorWrapper">
+				<div class="leftSquareBracket2d"></div>
+				<div class="numberWrapper2d">
+					<div class="numberBox"><input id="1x" type="number" max="10" Min="-10" /></div>
+					<div class="numberBox"><input id="1y" type="number" max="10" Min="-10" /></div>
+				</div>
+				<div class="rightSquareBracket2d"></div>
+			</div>
+			<div id="operator" class="operatorWrapper">=</div>
+			<div id="unitButton" class="drawButton">Draw</div>
+			<div id="error" class="errorBox">Error</div>
+		</div>
+		<div class="vectorInfoWrapper">
+			<div class="vectorInfoTop" style="background-color: white">
+				<div class="infoBoxTopTitles">Vector #</div><!--
+				--><div class="infoBoxTopPositions">Tail</div><div class='infoBoxDivider'></div><!--
+				--><div class="infoBoxTopPositions">Head</div><div class='infoBoxDivider'></div><!--
+				--><div class="infoBoxTopPositions">Vector</div><div class='infoBoxDivider'></div><!--
+				--><div class="infoBoxTopColors">Color</div>
+			</div>
+			<div id="vectorInfoBox"></div>
+		</div>
+	</body>
+</html>
